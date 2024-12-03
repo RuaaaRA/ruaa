@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Personal Website</title>
+  <style>
+    /* Reset default margin and padding */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      display: flex;
+      min-height: 100vh;
+      background-color: #f4f4f4;
+      overflow-x: hidden; /* Prevent horizontal scroll */
+    }
+
+    /* Left navigation */
+    header {
+      width: 220px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background-color: #6d4c41; /* Brown color for the navigation */
+      padding-top: 30px;
+      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center the items inside the header */
+      transition: all 0.3s ease;
+    }
+
+    /* Profile image styles */
+    header img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%; /* Make the image circular */
+      margin-bottom: 20px;
+      border: 3px solid #fff; /* Optional: to add a border around the image */
+    }
+
+    header nav ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    header nav ul li {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    header nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      display: block;
+      padding: 10px;
+      transition: background-color 0.3s ease;
+    }
+
+    header nav ul li a:hover {
+      background-color: #5d4037; /* Darker brown on hover */
+    }
+
+    /* Main content area */
+    main {
+      margin-left: 220px; /* Align the main content next to the fixed navigation */
+      width: calc(100% - 220px); /* Make sure content area doesn't overflow */
+      padding: 20px;
+      overflow-x: hidden; /* Prevent horizontal overflow */
+      height: auto; /* Allow sections to expand naturally */
+    }
+
+    /* Styles for each section to take full width and height */
+    .content-area {
+      margin-bottom: 40px;
+      padding: 20px;
+      background-color: #ffffff; /* White background for sections */
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 100%; /* Full width */
+      min-height: 100vh; /* Minimum height of full screen for each section */
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow-y: auto; /* Allow scrolling if content overflows */
+    }
+
+    /* Style for section titles */
+    .content-area h2 {
+      font-size: 3rem; /* Large font size */
+      color: #6d4c41; /* Brown color */
+      font-weight: bold; /* Make the text bold */
+      margin-bottom: 20px;
+    }
+
+    .content-area ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .content-area ul li {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .form input,
+    .form textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    .form button {
+      background-color: #6d4c41; /* Brown color for the button */
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form button:hover {
+      background-color: #5d4037; /* Darker brown on hover */
+    }
+
+    /* Hamburger Menu */
+    .hamburger-menu {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 10px;
+    }
+
+    .hamburger-menu div {
+      width: 30px;
+      height: 3px;
+      background-color: white;
+      margin: 5px 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      body {
+        flex-direction: column;
+      }
+
+      header {
+        width: 100%;
+        height: auto;
+        position: relative;
+        display: none; /* Hide by default */
+      }
+
+      header.show {
+        display: flex; /* Show when toggled */
+      }
+
+      header nav ul li {
+        display: inline-block;
+        margin: 10px;
+      }
+
+      main {
+        margin-left: 0;
+        width: 100%;
+      }
+
+      .content-area {
+        height: auto; /* Allow sections to expand naturally on small screens */
+      }
+
+      /* Show hamburger menu */
+      .hamburger-menu {
+        display: flex;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+      }
+
+      /* Style the checkbox to hide */
+      .menu-toggle {
+        display: none;
+      }
+
+      /* Toggle the navigation visibility */
+      .menu-toggle:checked + header {
+        display: flex; /* Show the header when checkbox is checked */
+      }
+
+      /* Style the hamburger menu when clicked */
+      .menu-toggle:checked + header .hamburger-menu div {
+        background-color: transparent;
+        position: relative;
+      }
+
+      .menu-toggle:checked + header .hamburger-menu div::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 30px;
+        height: 3px;
+        background-color: white;
+        transform: rotate(45deg);
+      }
+
+      .menu-toggle:checked + header .hamburger-menu div::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        width: 30px;
+        height: 3px;
+        background-color: white;
+        transform: rotate(-45deg);
+      }
+    }
+
+    /* Social Icons */
+    .social-icons {
+      margin-top: 90px;
+      display: flex;
+      align-items: center;
+      gap: 0px;
+    }
+
+    .social-icons a {
+      text-decoration: none;
+      color: inherit;
+      padding-left: 60px;
+
+    }
+
+    /* Smaller icons for small screens */
+    .social-icons img {
+      width: 90px;  /* Default size */
+      height: 90px;
+      transition: transform 0.3s ease;
+    }
+
+    .social-icons img:hover {
+      transform: scale(1.1);
+    }
+
+    /* Larger icons for bigger screens */
+    @media (min-width: 768px) {
+      .social-icons img {
+        width: 48px;  /* Bigger size */
+        height: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <header>
+    <!-- Profile image -->
+    <img src="https://i.pinimg.com/736x/fb/aa/c9/fbaac96db045e2290593d6f3c73ebc40.jpg" alt="Profile Picture">
+    
+    <nav>
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#education">Education</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#interests">Interests</a></li>
+        <li><a href="#awards">Awards</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hamburger menu for small screens -->
+  <input type="checkbox" class="menu-toggle" id="menu-toggle">
+  <label class="hamburger-menu" for="menu-toggle">
+    
+  </label>
+
+  <!-- Main content area -->
+  <main>
+<!-- About Section -->
+<div id="about" class="content-area">
+    <h2>About Me</h2>
+    <h3 style="font-size: 5rem; margin-top: 90px; padding-left: 90px;padding-right: 90px; color: #5d4037;">RUAA ABUMQADAM</h3> <!-- تكبير اسمك -->
+    <p style="font-family: 'Times New Roman', serif; font-size: 1.7rem; margin-top: 5px; padding-left: 90px;">
+        HEPRON | (+972) 56787052 | ruaaabumqa@gmail.com
+    </p> <!-- نص التفاصيل بخط روماني أصغر -->
+    
+    <!-- فقرة جديدة -->
+    <p style="font-size: 2rem; color: #555; margin-top: 20px; padding-left: 90px; padding-right: 200px;">
+      I am passionate about technology and innovation. I enjoy working on challenging projects that allow me to push my limits and expand my knowledge. My goal is to create meaningful and user-friendly web experiences.
+    </p> <!-- نص إضافي يشرح شيء عنك -->
+  
+    <!-- Social Media Icons -->
+    <div class="social-icons">
+      <a href="https://github.com/your-username" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub ; ">
+      </a>
+      <a href="mailto:your-email@example.com">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg" alt="Gmail ;">
+      </a>
+    </div>
+  </div>
+  
+  
+  
+
+ <!-- Experience Section -->
+<div id="experience" class="content-area" style="padding-left: 100px; padding-top: 40px;">
+    <h2 style="font-size: 4rem; margin-bottom: 20px;">EXPERIENCE</h2> <!-- تكبير الكلمة -->
+    
+    <div style="font-size: 2rem; font-weight: bold; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+      <span>WEB DEVELOPER</span>
+      <span style="font-size: 1.4rem; font-family: 'Times New Roman', serif;">December 2020 - March 2023</span> <!-- التاريخ على اليمين -->
+    </div>
+    
+    <div style="font-size: 1.8rem; font-family: 'Times New Roman', serif; margin-bottom: 20px;">INTELITEC SOLUTIONS</div>
+    
+    <p style="font-size: 1.6rem; font-family: 'Times New Roman', serif;">
+      Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.
+    </p>
+  </div>
+  
+
+   
+   
+<!-- Education Section -->
+<div id="education" class="content-area" style="padding-left: 100px; padding-right: 100px;">
+    <h2 style="font-size: 5rem; margin-top: 40px;">EDUCATION</h2> <!-- تكبير العنوان -->
+    
+    <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center;">
+      <ul style="font-size: 2rem; font-family: 'Times New Roman', serif;">
+        <li style="font-size: 4rem; font-weight: bold;">BETHLEHEM UNIVERSITY</li> <!-- تكبير النص -->
+        <li style="font-size: 2rem; font-style: italic;">BACHELOR OF INFORMATION TECHNOLOGY</li> <!-- تصغير النص -->
+        <li style="font-size: 1.8rem;">GPA: 3.20</li> <!-- تصغير النص -->
+      </ul>
+      <span style="font-size: 1.8rem; font-family: 'Times New Roman', serif; color: #333;">August 2022 - May 2024</span> <!-- التاريخ -->
+    </div>
+  </div>
+ <!-- Skills Section -->
+<!-- Skills Section -->
+<div id="skills" class="content-area" style="padding-left: 100px; padding-right: 100px;">
+    <h2 style="font-size: 3.5rem; margin-top: 40px;">SKILLS</h2> <!-- تكبير كلمة SKILLS -->
+    <p style="font-size: 1.5rem; font-family: 'Times New Roman', serif; margin-top: 20px;">PROGRAMMING LANGUAGES & TOOLS</p> <!-- نص أصغر بخط روماني -->
+  
+    <div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 40px; justify-content: center;">
+        <!-- Python -->
+        <div style="text-align: center; flex: 1 0 150px; max-width: 150px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python" style="width: 80px; height: 80px;">
+            <p>Python</p>
+        </div>
+        <!-- C++ -->
+        <div style="text-align: center; flex: 1 0 150px; max-width: 150px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" alt="C++" style="width: 80px; height: 80px;">
+            <p>C++</p>
+        </div>
+
+        <!-- Workflow Text -->
+        <div style="flex: 1 0 100%; max-width: 100%; text-align: left; margin-top: 30px;">
+            <h3 style="font-size: 2rem; margin-bottom: 20px;">WORKFLOW</h3>
+            <ul style="font-size: 1.2rem; font-family: 'Times New Roman', serif; list-style-type: none; padding: 0;">
+                <li>📱 Mobile-First, Responsive Design</li>
+                <li>🔧 Cross Browser Testing & Debugging</li>
+                <li>👥 Cross Functional Teams</li>
+                <li>⚙️ Agile Development & Scrum</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+  
+   <!-- Interests Section -->
+<div id="interests" class="content-area">
+    <h2 style="font-size: 4rem; margin-top: 120px;padding-left: 100px;">INTERESTS</h2> <!-- تكبير كلمة Interests مع مسافة من الأعلى -->
+    <p style="font-size: 2rem; margin-top: 50px; padding-left: 100px;  line-height: 1.6;">
+      Apart from being a web developer, I enjoy most of my time being outdoors. In the winter, I am an avid skier and novice ice climber.
+      During the warmer months here in Palestine, I enjoy mountain biking, free climbing, and kayaking.
+    </p>
+    
+    <p style="font-size: 2rem; padding-left: 40px; padding-left: 100px; line-height: 1.6;">
+      When forced indoors, I follow a number of sci-fi and fantasy genre movies and television shows, I am an aspiring chef, and I spend a
+      large amount of my free time exploring the latest technology advancements in the front-end web development world.
+    </p>
+  </div>
+  
+
+<!-- Awards Section -->
+<div id="awards" class="content-area" style="padding-left: 100px; padding-right: 100px;">
+    <h2 style="font-size: 3.5rem; margin-top: 40px;">AWARDS</h2> <!-- تكبير العنوان -->
+    <div style="margin-top: 20px;">
+      <ul style="font-size: 80px; font-family: 'Times New Roman', serif;">
+        <li>🏆 Google Analytics Certified Developer</li> <!-- رمز الكأس قبل النص -->
+        <li>🏆 Mobile Web Specialist - Google Certification</li>
+        <li>🏆 1st Place - University of Bethlehem - Emerging Tech Competition 2009</li>
+        <li>🏆 1st Place - University of Bethlehem - Adobe Creative Photoshop 2008</li>
+        <li>🏆 2nd Place - University of Bethlehem - Emerging Tech Competition 2008</li>
+        <li>🏆 1st Place - Birzeit University - Hackathon 2006</li>
+        <li>🏆 3rd Place - Bethlehem University - Hackathon 2005</li>
+      </ul>
+    </div>
+  </div>
+  
+  
+
+    <!-- Contact Section -->
+    <div id="contact" class="content-area">
+      <h2>Contact</h2>
+      <p>Feel free to reach out if you have any questions or would like to collaborate!</p>
+      <div class="form">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" required> </textarea>
+
+        <button type="submit">Send Message</button>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
